@@ -11,6 +11,9 @@ public ref partial struct CPU {
             }
 
             switch (instruction.Kind) {
+                case InstructionKind.NOP:
+                    cycles--;
+                    break;
                 case InstructionKind.LDA:
                     ExecuteLoadInstruction(instruction.AddressingMode, ref cycles, out this.A, ref this, ref memory);
                     break;

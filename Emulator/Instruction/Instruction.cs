@@ -15,6 +15,8 @@ public readonly struct Instruction : IEquatable<Instruction> {
 
     public static bool TryDecode(Byte opcode, out Instruction instruction) {
         instruction = opcode switch {
+            0xEA => new Instruction(InstructionKind.NOP, AddressingMode.Implied),
+
             // LDA
             0xA9 => new Instruction(InstructionKind.LDA, AddressingMode.Immediate),
             0xA5 => new Instruction(InstructionKind.LDA, AddressingMode.ZeroPage),

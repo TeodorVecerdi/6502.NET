@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entry", "Entry\Entry.csproj", "{DEEED00E-4008-4C50-94A9-0EA485232D65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emulator", "Emulator\Emulator.csproj", "{31BEEF04-67D3-46EC-A4DD-E336F4BD8DA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{281E71C0-09EF-4EC0-B5FC-C5D0F046574E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEEED00E-4008-4C50-94A9-0EA485232D65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEEED00E-4008-4C50-94A9-0EA485232D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEEED00E-4008-4C50-94A9-0EA485232D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEEED00E-4008-4C50-94A9-0EA485232D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31BEEF04-67D3-46EC-A4DD-E336F4BD8DA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31BEEF04-67D3-46EC-A4DD-E336F4BD8DA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31BEEF04-67D3-46EC-A4DD-E336F4BD8DA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31BEEF04-67D3-46EC-A4DD-E336F4BD8DA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{281E71C0-09EF-4EC0-B5FC-C5D0F046574E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{281E71C0-09EF-4EC0-B5FC-C5D0F046574E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{281E71C0-09EF-4EC0-B5FC-C5D0F046574E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{281E71C0-09EF-4EC0-B5FC-C5D0F046574E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,4 +1,6 @@
-﻿namespace Emulator;
+﻿using System.Runtime.CompilerServices;
+
+namespace Emulator;
 
 public ref partial struct CPU {
     public int32_t Execute(int32_t cycles, ref Memory64K memory) {
@@ -51,12 +53,14 @@ public ref partial struct CPU {
         return cycles;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static void ExecuteLoadInstruction(AddressingMode addressingMode, ref int32_t cycles, out Byte register, ref CPU cpu, ref Memory64K memory) {
         Byte value = FetchByte(addressingMode, ref cycles, ref cpu, ref memory);
         register = value;
         cpu.SetZeroAndNegativeFlags(value);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private static void ExecuteStoreInstruction(AddressingMode addressingMode, ref int32_t cycles, Byte register, ref CPU cpu, ref Memory64K memory) {
         StoreByte(addressingMode, register, ref cycles, ref cpu, ref memory);
     }

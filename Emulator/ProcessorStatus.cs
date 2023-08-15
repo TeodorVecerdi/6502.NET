@@ -8,37 +8,37 @@ public struct ProcessorStatus : IFormattable {
     private uint8_t m_Flags;
 
     public bool Carry {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x01) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x01 : m_Flags & ~0x01);
     }
 
     public bool Zero {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x02) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x02 : m_Flags & ~0x02);
     }
 
     public bool InterruptDisable {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x04) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x04 : m_Flags & ~0x04);
     }
 
     public bool DecimalMode {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x08) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x08 : m_Flags & ~0x08);
     }
 
     public bool BreakCommand {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x10) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x10 : m_Flags & ~0x10);
     }
 
@@ -46,16 +46,16 @@ public struct ProcessorStatus : IFormattable {
     // It's always set and we won't represent it in this struct.
 
     public bool Overflow {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x40) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x40 : m_Flags & ~0x40);
     }
 
     public bool Negative {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         get => (m_Flags & 0x80) != 0;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
         set => m_Flags = (byte)(value ? m_Flags | 0x80 : m_Flags & ~0x80);
     }
 

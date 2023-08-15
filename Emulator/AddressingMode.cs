@@ -18,7 +18,7 @@ public enum AddressingMode : uint8_t {
 }
 
 internal static class AddressingModeExtensions {
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public static string ToMnemonic(this AddressingMode mode) => mode switch {
         AddressingMode.Implied => "Implied",
         AddressingMode.Immediate => "Immediate",

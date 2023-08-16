@@ -39,7 +39,8 @@ bus.RAM[0xFFFC] = 0x00;
 bus.RAM[0xFFFD] = 0x80;
 
 
-Dictionary<ushort,string> code = cpu.Disassemble(0x8000, 0x8023);
+Dictionary<ushort, string> code = cpu.Disassemble(0x8000, 0x8023);
+
 Console.WriteLine();
 Console.WriteLine(" - Disassembly -\n");
 Console.WriteLine(string.Join('\n', code.Select(kvp => $" {kvp.Key.ToString("X4").Cyan()}    {kvp.Value}")));

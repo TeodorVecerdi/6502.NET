@@ -8,6 +8,8 @@ public readonly partial struct Memory64K {
     private const int32_t SIZE = 64 * 1024;
     private readonly uint8_t[] m_Data = new uint8_t[SIZE];
 
+    public ReadOnlySpan<uint8_t> Data => this.m_Data;
+
     public Memory64K() {}
 
     public uint8_t this[uint16_t address] {

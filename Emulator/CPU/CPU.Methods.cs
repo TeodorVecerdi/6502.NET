@@ -38,7 +38,7 @@ public partial class CPU {
         this.m_Cycles = 7;
     }
 
-    public bool IsComplete() => this.m_Cycles == 0;
+    public bool IsInstructionComplete() => this.m_Cycles == 0;
 
     public void InterruptRequest() => NotImplemented("CPU.InterruptRequest");
     public void NonMaskableInterrupt() => NotImplemented("CPU.NonMaskableInterrupt");

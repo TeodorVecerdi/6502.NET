@@ -1,24 +1,23 @@
-﻿using System.Runtime.InteropServices;
+﻿namespace Emulator;
 
-namespace Emulator;
-
-[StructLayout(LayoutKind.Explicit, Size = 8)]
-public ref partial struct CPU {
-    [FieldOffset(0)]
-    public Word PC;
-
-    [FieldOffset(2)]
-    public Byte SP;
-
-    [FieldOffset(3)]
-    public Byte A;
-
-    [FieldOffset(4)]
-    public Byte X;
-
-    [FieldOffset(5)]
-    public Byte Y;
-
-    [FieldOffset(6)]
+public partial class CPU {
+    public uint16_t PC;
+    public uint8_t SP;
+    public uint8_t A;
+    public uint8_t X;
+    public uint8_t Y;
     public ProcessorStatus Status;
+
+    private Bus? m_Bus;
+
+    private uint8_t m_Fetched;
+    private uint16_t m_Temp;
+    private uint16_t m_AbsoluteAddress;
+    private uint16_t m_RelativeAddress;
+    private uint8_t m_Opcode;
+    private uint16_t m_OpcodeAddress;
+    private uint8_t m_Cycles;
+    private uint64_t m_ClockCount;
+
+    public ushort OpcodeAddress => this.m_OpcodeAddress;
 }

@@ -7,5 +7,4 @@ global using int16_t = System.Int16;
 global using int32_t = System.Int32;
 global using int64_t = System.Int64;
 
-global using Byte = System.Byte;
-global using Word = System.UInt16;
+global using static Utilities.Prelude;

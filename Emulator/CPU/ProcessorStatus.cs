@@ -59,6 +59,13 @@ public struct ProcessorStatus : IFormattable {
         set => m_Flags = (byte)(value ? m_Flags | 0x80 : m_Flags & ~0x80);
     }
 
+    public uint8_t Data {
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        get => m_Flags;
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        set => m_Flags = value;
+    }
+
     public override string ToString() => ToString("F");
 
     public string ToString(string? format, IFormatProvider? formatProvider = null) {

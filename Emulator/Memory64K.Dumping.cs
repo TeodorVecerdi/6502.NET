@@ -20,9 +20,9 @@ public readonly partial struct Memory64K {
 
         for (int row = 0; row < rows; row++) {
             int address = startingAddress + row * columns;
-            stringBuilder.Append($" {address:X4} {B.Vertical()}");
+            stringBuilder.Append($" {address.ToString("X4").Cyan()} {B.Vertical()}");
             for (int col = 0; col < columns; col++) {
-                stringBuilder.Append($" {this[address + col]:X2}");
+                stringBuilder.Append($" {this[address + col].ToString("X2").DarkBlue()}");
             }
 
             stringBuilder.Append($" {B.Vertical()}");
@@ -44,7 +44,7 @@ public readonly partial struct Memory64K {
 
     private static void AppendHeader(StringBuilder stringBuilder, int width) {
         for (int i = 0; i < width * 16; i++) {
-            stringBuilder.Append($"{i,-3:X}");
+            stringBuilder.Append($"{i.ToString("X").PadRight(3).Cyan()}");
         }
     }
 }

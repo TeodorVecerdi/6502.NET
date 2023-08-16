@@ -1,13 +1,14 @@
 ﻿using System.Text;
 using Emulator;
 
+Bus bus = new();
 CPU cpu = new();
-Memory64K memory = new();
-cpu.Reset(ref memory);
+
+bus.Connect(cpu);
 
 
-memory.WriteBlock(
-    0x0000,
+bus.RAM.WriteBlock(
+    offset: 0x8000,
 
     0xA9, 0xFF, // LDA #$FF
     0xA9, 0x00, // LDA #$00
@@ -31,6 +32,53 @@ memory.WriteBlock(
     0x00
 );
 
+// Program for calculating 3 * 10:
+// A2 0A 8E 00 00 A2 03 8E 01 00 AC 00 00 A9 00 18 6D 01 00 88 D0 FA 8D 02 00 EA EA EA
+
+bus.RAM[0xFFFC] = 0x00;
+bus.RAM[0xFFFD] = 0x80;
+
+
+Dictionary<ushort,string> code = cpu.Disassemble(0x8000, 0x8023);
+Console.WriteLine();
+Console.WriteLine(" - Disassembly -\n");
+Console.WriteLine(string.Join('\n', code.Select(kvp => $" {kvp.Key.ToString("X4").Cyan()}    {kvp.Value}")));
+Console.WriteLine();
+
+
+bus.Reset();
+Execute(7); // shouldn't do anything
+
+try {
+    while (true) {
+        bus.Clock();
+
+        if (cpu.IsComplete()) {
+            Console.WriteLine($" {cpu.OpcodeAddress.ToString("X4").Cyan()}    {code[cpu.OpcodeAddress]}");
+            Console.WriteLine(cpu.ToString());
+        }
+    }
+} finally {
+    Console.WriteLine();
+    Console.WriteLine(cpu.ToString());
+    Console.WriteLine();
+
+    // Dump RAM
+    StringBuilder sb = new();
+
+    sb.AppendLine(" - Zero Page -\n");
+    bus.RAM.DumpPage(0x00, sb);
+
+    sb.AppendLine();
+
+    sb.AppendLine(" - Program Page -\n");
+    bus.RAM.DumpPage(0x8000 / 0x100, sb);
+
+    Console.WriteLine(sb.ToString());
+}
+
+
+/*
 Console.WriteLine("LDA #$FF");
 cpu.Execute(2, ref memory).Verify();
 Console.WriteLine(cpu.ToString());
@@ -84,15 +132,15 @@ STA $00C4");
 cpu.Execute(2 + 4 + 2 + 3 + 4, ref memory).Verify();
 Console.WriteLine(cpu.ToString());
 Console.WriteLine();
+*/
 
-StringBuilder sb = new();
-memory.DumpPages(..1, sb);
-Console.WriteLine(sb.ToString());
 
-internal static class Extensions {
-    public static void Verify(this int cycles) {
-        if (cycles != 0) {
-            throw new InvalidOperationException($"Expected 0 cycles after executing, got {cycles}.");
-        }
+void Execute(int cycles) {
+    for (int i = 0; i < cycles; i++) {
+        bus.Clock();
+    }
+
+    if (!cpu.IsComplete()) {
+        throw new Exception("CPU did not complete in the expected number of cycles.");
     }
 }

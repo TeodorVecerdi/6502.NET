@@ -1,10 +1,10 @@
 ﻿namespace Emulator;
 
 public enum InstructionKind {
+    XXX, // Illegal or unofficial opcode
     /*
      * Load/Store Operations
      */
-
     /* Load Accumulator  */ LDA, // N,Z
     /* Load X Register   */ LDX, // N,Z
     /* Load Y Register   */ LDY, // N,Z

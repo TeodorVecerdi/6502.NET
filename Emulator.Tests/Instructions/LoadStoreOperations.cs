@@ -1,6 +1,6 @@
 ﻿namespace Emulator.Tests.Instructions;
 
-public class LoadStoreInstructions : CPUTest {
+public class LoadStoreOperations : CPUTest {
     // Load Accumulator and test flags
     [Theory]
     [InlineData(0x80, true, false)] // LDA Immediate with Negative flag

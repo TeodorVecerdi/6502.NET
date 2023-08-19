@@ -25,7 +25,10 @@ public partial class CPU {
     internal uint16_t Temp => this.m_Temp;
     internal uint16_t AbsoluteAddress => this.m_AbsoluteAddress;
     internal uint16_t RelativeAddress => this.m_RelativeAddress;
-    internal uint8_t Opcode => this.m_Opcode;
+    internal uint8_t Opcode {
+        get => this.m_Opcode;
+        set => this.m_Opcode = value;
+    }
     internal uint8_t Cycles => this.m_Cycles;
     internal uint64_t ClockCount => this.m_ClockCount;
 }

@@ -32,16 +32,91 @@ public partial class CPU {
     internal static bool CLD(CPU cpu) => NotImplemented<bool>("CLD");
     internal static bool CLI(CPU cpu) => NotImplemented<bool>("CLI");
     internal static bool CLV(CPU cpu) => NotImplemented<bool>("CLV");
-    internal static bool CMP(CPU cpu) => NotImplemented<bool>("CMP");
-    internal static bool CPX(CPU cpu) => NotImplemented<bool>("CPX");
-    internal static bool CPY(CPU cpu) => NotImplemented<bool>("CPY");
-    internal static bool DEC(CPU cpu) => NotImplemented<bool>("DEC");
-    internal static bool DEX(CPU cpu) => NotImplemented<bool>("DEX");
-    internal static bool DEY(CPU cpu) => NotImplemented<bool>("DEY");
+
+    internal static bool CMP(CPU cpu) {
+        cpu.Fetch();
+
+        cpu.m_Temp = (uint16_t)(cpu.A - cpu.m_Fetched);
+        cpu.Status.Carry = cpu.A >= cpu.m_Fetched;
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        return true;
+    }
+
+    internal static bool CPX(CPU cpu) {
+        cpu.Fetch();
+
+        cpu.m_Temp = (uint16_t)(cpu.X - cpu.m_Fetched);
+        cpu.Status.Carry = cpu.X >= cpu.m_Fetched;
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        return false;
+    }
+
+    internal static bool CPY(CPU cpu) {
+        cpu.Fetch();
+
+        cpu.m_Temp = (uint16_t)(cpu.Y - cpu.m_Fetched);
+        cpu.Status.Carry = cpu.Y >= cpu.m_Fetched;
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        return false;
+    }
+
+    internal static bool DEC(CPU cpu) {
+        cpu.Fetch();
+
+        cpu.m_Temp = (uint16_t)(cpu.m_Fetched - 1);
+        cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        return false;
+    }
+
+    internal static bool DEX(CPU cpu) {
+        cpu.X--;
+        cpu.Status.Zero = cpu.X == 0x00;
+        cpu.Status.Negative = (cpu.X & 0x80) != 0;
+        return false;
+    }
+
+    internal static bool DEY(CPU cpu) {
+        cpu.Y--;
+        cpu.Status.Zero = cpu.Y == 0x00;
+        cpu.Status.Negative = (cpu.Y & 0x80) != 0;
+        return false;
+    }
+
     internal static bool EOR(CPU cpu) => NotImplemented<bool>("EOR");
-    internal static bool INC(CPU cpu) => NotImplemented<bool>("INC");
-    internal static bool INX(CPU cpu) => NotImplemented<bool>("INX");
-    internal static bool INY(CPU cpu) => NotImplemented<bool>("INY");
+    internal static bool INC(CPU cpu) {
+        cpu.Fetch();
+
+        cpu.m_Temp = (uint16_t)(cpu.m_Fetched + 1);
+        cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        return false;
+    }
+
+    internal static bool INX(CPU cpu) {
+        cpu.X++;
+        cpu.Status.Zero = cpu.X == 0x00;
+        cpu.Status.Negative = (cpu.X & 0x80) != 0;
+        return false;
+    }
+
+    internal static bool INY(CPU cpu) {
+        cpu.Y++;
+        cpu.Status.Zero = cpu.Y == 0x00;
+        cpu.Status.Negative = (cpu.Y & 0x80) != 0;
+        return false;
+    }
+
     internal static bool JMP(CPU cpu) => NotImplemented<bool>("JMP");
     internal static bool JSR(CPU cpu) => NotImplemented<bool>("JSR");
 

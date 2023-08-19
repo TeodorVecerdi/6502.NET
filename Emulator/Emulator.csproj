@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -8,26 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="7.0.0-preview.2.22152.2" />
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="7.0.0-preview.2.22152.2" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Utilities\Utilities.csproj" />
+        <ProjectReference Include="..\Utilities\Utilities.csproj" />
     </ItemGroup>
-
 
 
     <ItemGroup>
-      <None Remove="Emulator.csproj.DotSettings" />
+        <None Remove="Emulator.csproj.DotSettings" />
     </ItemGroup>
-
-
-
-
-
-
-
-
-
-
 </Project>

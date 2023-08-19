@@ -2,6 +2,7 @@
 
 public enum InstructionKind {
     XXX, // Illegal or unofficial opcode
+
     /*
      * Load/Store Operations
      */

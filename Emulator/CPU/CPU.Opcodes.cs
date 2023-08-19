@@ -1,7 +1,7 @@
 ﻿namespace Emulator;
 
 public partial class CPU {
-    private static bool ADC(CPU cpu) {
+    internal static bool ADC(CPU cpu) {
         cpu.Fetch();
 
         cpu.m_Temp = (uint16_t)(cpu.A + cpu.m_Fetched + (uint16_t)(cpu.Status.Carry ? 1 : 0));
@@ -16,58 +16,58 @@ public partial class CPU {
         return true;
     }
 
-    private static bool AND(CPU cpu) => NotImplemented<bool>("AND");
-    private static bool ASL(CPU cpu) => NotImplemented<bool>("ASL");
-    private static bool BCC(CPU cpu) => NotImplemented<bool>("BCC");
-    private static bool BCS(CPU cpu) => NotImplemented<bool>("BCS");
-    private static bool BEQ(CPU cpu) => NotImplemented<bool>("BEQ");
-    private static bool BIT(CPU cpu) => NotImplemented<bool>("BIT");
-    private static bool BMI(CPU cpu) => NotImplemented<bool>("BMI");
-    private static bool BNE(CPU cpu) => NotImplemented<bool>("BNE");
-    private static bool BPL(CPU cpu) => NotImplemented<bool>("BPL");
-    private static bool BRK(CPU cpu) => NotImplemented<bool>("BRK");
-    private static bool BVC(CPU cpu) => NotImplemented<bool>("BVC");
-    private static bool BVS(CPU cpu) => NotImplemented<bool>("BVS");
-    private static bool CLC(CPU cpu) => NotImplemented<bool>("CLC");
-    private static bool CLD(CPU cpu) => NotImplemented<bool>("CLD");
-    private static bool CLI(CPU cpu) => NotImplemented<bool>("CLI");
-    private static bool CLV(CPU cpu) => NotImplemented<bool>("CLV");
-    private static bool CMP(CPU cpu) => NotImplemented<bool>("CMP");
-    private static bool CPX(CPU cpu) => NotImplemented<bool>("CPX");
-    private static bool CPY(CPU cpu) => NotImplemented<bool>("CPY");
-    private static bool DEC(CPU cpu) => NotImplemented<bool>("DEC");
-    private static bool DEX(CPU cpu) => NotImplemented<bool>("DEX");
-    private static bool DEY(CPU cpu) => NotImplemented<bool>("DEY");
-    private static bool EOR(CPU cpu) => NotImplemented<bool>("EOR");
-    private static bool INC(CPU cpu) => NotImplemented<bool>("INC");
-    private static bool INX(CPU cpu) => NotImplemented<bool>("INX");
-    private static bool INY(CPU cpu) => NotImplemented<bool>("INY");
-    private static bool JMP(CPU cpu) => NotImplemented<bool>("JMP");
-    private static bool JSR(CPU cpu) => NotImplemented<bool>("JSR");
+    internal static bool AND(CPU cpu) => NotImplemented<bool>("AND");
+    internal static bool ASL(CPU cpu) => NotImplemented<bool>("ASL");
+    internal static bool BCC(CPU cpu) => NotImplemented<bool>("BCC");
+    internal static bool BCS(CPU cpu) => NotImplemented<bool>("BCS");
+    internal static bool BEQ(CPU cpu) => NotImplemented<bool>("BEQ");
+    internal static bool BIT(CPU cpu) => NotImplemented<bool>("BIT");
+    internal static bool BMI(CPU cpu) => NotImplemented<bool>("BMI");
+    internal static bool BNE(CPU cpu) => NotImplemented<bool>("BNE");
+    internal static bool BPL(CPU cpu) => NotImplemented<bool>("BPL");
+    internal static bool BRK(CPU cpu) => NotImplemented<bool>("BRK");
+    internal static bool BVC(CPU cpu) => NotImplemented<bool>("BVC");
+    internal static bool BVS(CPU cpu) => NotImplemented<bool>("BVS");
+    internal static bool CLC(CPU cpu) => NotImplemented<bool>("CLC");
+    internal static bool CLD(CPU cpu) => NotImplemented<bool>("CLD");
+    internal static bool CLI(CPU cpu) => NotImplemented<bool>("CLI");
+    internal static bool CLV(CPU cpu) => NotImplemented<bool>("CLV");
+    internal static bool CMP(CPU cpu) => NotImplemented<bool>("CMP");
+    internal static bool CPX(CPU cpu) => NotImplemented<bool>("CPX");
+    internal static bool CPY(CPU cpu) => NotImplemented<bool>("CPY");
+    internal static bool DEC(CPU cpu) => NotImplemented<bool>("DEC");
+    internal static bool DEX(CPU cpu) => NotImplemented<bool>("DEX");
+    internal static bool DEY(CPU cpu) => NotImplemented<bool>("DEY");
+    internal static bool EOR(CPU cpu) => NotImplemented<bool>("EOR");
+    internal static bool INC(CPU cpu) => NotImplemented<bool>("INC");
+    internal static bool INX(CPU cpu) => NotImplemented<bool>("INX");
+    internal static bool INY(CPU cpu) => NotImplemented<bool>("INY");
+    internal static bool JMP(CPU cpu) => NotImplemented<bool>("JMP");
+    internal static bool JSR(CPU cpu) => NotImplemented<bool>("JSR");
 
-    private static bool LDA(CPU cpu) {
+    internal static bool LDA(CPU cpu) {
         cpu.A = cpu.Fetch();
         cpu.Status.Zero = cpu.A == 0x00;
         cpu.Status.Negative = (cpu.A & 0x80) != 0;
         return true;
     }
 
-    private static bool LDX(CPU cpu) {
+    internal static bool LDX(CPU cpu) {
         cpu.X = cpu.Fetch();
         cpu.Status.Zero = cpu.X == 0x00;
         cpu.Status.Negative = (cpu.X & 0x80) != 0;
         return true;
     }
 
-    private static bool LDY(CPU cpu) {
+    internal static bool LDY(CPU cpu) {
         cpu.Y = cpu.Fetch();
         cpu.Status.Zero = cpu.Y == 0x00;
         cpu.Status.Negative = (cpu.Y & 0x80) != 0;
         return true;
     }
 
-    private static bool LSR(CPU cpu) => NotImplemented<bool>("LSR");
-    private static bool NOP(CPU cpu) {
+    internal static bool LSR(CPU cpu) => NotImplemented<bool>("LSR");
+    internal static bool NOP(CPU cpu) {
         // https://github.com/OneLoneCoder/olcNES/blob/master/Part%232%20-%20CPU/olc6502.cpp#L1192
         switch (cpu.m_Opcode) {
             case 0x1C:
@@ -82,44 +82,44 @@ public partial class CPU {
         return false;
     }
 
-    private static bool ORA(CPU cpu) => NotImplemented<bool>("ORA");
-    private static bool PHA(CPU cpu) => NotImplemented<bool>("PHA");
-    private static bool PHP(CPU cpu) => NotImplemented<bool>("PHP");
-    private static bool PLA(CPU cpu) => NotImplemented<bool>("PLA");
-    private static bool PLP(CPU cpu) => NotImplemented<bool>("PLP");
-    private static bool ROL(CPU cpu) => NotImplemented<bool>("ROL");
-    private static bool ROR(CPU cpu) => NotImplemented<bool>("ROR");
-    private static bool RTI(CPU cpu) => NotImplemented<bool>("RTI");
-    private static bool RTS(CPU cpu) => NotImplemented<bool>("RTS");
-    private static bool SBC(CPU cpu) => NotImplemented<bool>("SBC");
-    private static bool SEC(CPU cpu) => NotImplemented<bool>("SEC");
-    private static bool SED(CPU cpu) => NotImplemented<bool>("SED");
-    private static bool SEI(CPU cpu) => NotImplemented<bool>("SEI");
+    internal static bool ORA(CPU cpu) => NotImplemented<bool>("ORA");
+    internal static bool PHA(CPU cpu) => NotImplemented<bool>("PHA");
+    internal static bool PHP(CPU cpu) => NotImplemented<bool>("PHP");
+    internal static bool PLA(CPU cpu) => NotImplemented<bool>("PLA");
+    internal static bool PLP(CPU cpu) => NotImplemented<bool>("PLP");
+    internal static bool ROL(CPU cpu) => NotImplemented<bool>("ROL");
+    internal static bool ROR(CPU cpu) => NotImplemented<bool>("ROR");
+    internal static bool RTI(CPU cpu) => NotImplemented<bool>("RTI");
+    internal static bool RTS(CPU cpu) => NotImplemented<bool>("RTS");
+    internal static bool SBC(CPU cpu) => NotImplemented<bool>("SBC");
+    internal static bool SEC(CPU cpu) => NotImplemented<bool>("SEC");
+    internal static bool SED(CPU cpu) => NotImplemented<bool>("SED");
+    internal static bool SEI(CPU cpu) => NotImplemented<bool>("SEI");
 
-    private static bool STA(CPU cpu) {
+    internal static bool STA(CPU cpu) {
         cpu.Write(cpu.m_AbsoluteAddress, cpu.A);
         return false;
     }
 
-    private static bool STX(CPU cpu) {
+    internal static bool STX(CPU cpu) {
         cpu.Write(cpu.m_AbsoluteAddress, cpu.X);
         return false;
     }
 
-    private static bool STY(CPU cpu) {
+    internal static bool STY(CPU cpu) {
         cpu.Write(cpu.m_AbsoluteAddress, cpu.Y);
         return false;
     }
 
-    private static bool TAX(CPU cpu) => NotImplemented<bool>("TAX");
-    private static bool TAY(CPU cpu) => NotImplemented<bool>("TAY");
-    private static bool TSX(CPU cpu) => NotImplemented<bool>("TSX");
-    private static bool TXA(CPU cpu) => NotImplemented<bool>("TXA");
-    private static bool TXS(CPU cpu) => NotImplemented<bool>("TXS");
-    private static bool TYA(CPU cpu) => NotImplemented<bool>("TYA");
+    internal static bool TAX(CPU cpu) => NotImplemented<bool>("TAX");
+    internal static bool TAY(CPU cpu) => NotImplemented<bool>("TAY");
+    internal static bool TSX(CPU cpu) => NotImplemented<bool>("TSX");
+    internal static bool TXA(CPU cpu) => NotImplemented<bool>("TXA");
+    internal static bool TXS(CPU cpu) => NotImplemented<bool>("TXS");
+    internal static bool TYA(CPU cpu) => NotImplemented<bool>("TYA");
 
     // Illegal/unofficial opcodes
-    private static bool XXX(CPU cpu) => false;
+    internal static bool XXX(CPU cpu) => false;
 
     public static readonly unsafe Instruction[] InstructionLookupTable = {
         new(InstructionKind.BRK, AddressingMode.IMM, 7, &BRK, &IMM), new(InstructionKind.ORA, AddressingMode.IZX, 6, &ORA, &IZX), new(InstructionKind.XXX, AddressingMode.IMP, 2, &XXX, &IMP), new(InstructionKind.XXX, AddressingMode.IMP, 8, &XXX, &IMP), new(InstructionKind.XXX, AddressingMode.IMP, 3, &NOP, &IMP), new(InstructionKind.ORA, AddressingMode.ZP0, 3, &ORA, &ZP0), new(InstructionKind.ASL, AddressingMode.ZP0, 5, &ASL, &ZP0), new(InstructionKind.XXX, AddressingMode.IMP, 5, &XXX, &IMP), new(InstructionKind.PHP, AddressingMode.IMP, 3, &PHP, &IMP), new(InstructionKind.ORA, AddressingMode.IMM, 2, &ORA, &IMM), new(InstructionKind.ASL, AddressingMode.IMP, 2, &ASL, &IMP), new(InstructionKind.XXX, AddressingMode.IMP, 2, &XXX, &IMP), new(InstructionKind.XXX, AddressingMode.IMP, 4, &NOP, &IMP), new(InstructionKind.ORA, AddressingMode.ABS, 4, &ORA, &ABS), new(InstructionKind.ASL, AddressingMode.ABS, 6, &ASL, &ABS), new(InstructionKind.XXX, AddressingMode.IMP, 6, &XXX, &IMP), 

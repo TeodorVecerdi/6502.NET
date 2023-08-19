@@ -39,4 +39,48 @@ public class ArithmeticOperations : CPUTest {
         Assert.Equal(expectC, m_CPU.Status.Carry);
     }
 
+    [Theory]
+    [InlineData(0x50, 0x50, true, false, true)] // Equal values, Zero flag set
+    [InlineData(0x60, 0x50, false, false, true)] // Accumulator is greater
+    [InlineData(0x40, 0x50, false, true, false)] // Accumulator is smaller
+    public void CMP(uint8_t initialA, uint8_t valueToLoad, bool expectZ, bool expectN, bool expectC) {
+        m_CPU.PC = 0x0200;
+        m_CPU.A = initialA;
+        m_CPU.Write(0x0200, valueToLoad);
+        ExecuteInstruction(0xC9, m_CPU);
+
+        Assert.Equal(expectZ, m_CPU.Status.Zero);
+        Assert.Equal(expectN, m_CPU.Status.Negative);
+        Assert.Equal(expectC, m_CPU.Status.Carry);
+    }
+
+    [Theory]
+    [InlineData(0x50, 0x50, true, false, true)] // Equal values, Zero flag set
+    [InlineData(0x60, 0x50, false, false, true)] // X is greater
+    [InlineData(0x40, 0x50, false, true, false)] // X is smaller
+    public void CPX(uint8_t initialX, uint8_t valueToLoad, bool expectZ, bool expectN, bool expectC) {
+        m_CPU.PC = 0x0200;
+        m_CPU.X = initialX;
+        m_CPU.Write(0x0200, valueToLoad);
+        ExecuteInstruction(0xE0, m_CPU);
+
+        Assert.Equal(expectZ, m_CPU.Status.Zero);
+        Assert.Equal(expectN, m_CPU.Status.Negative);
+        Assert.Equal(expectC, m_CPU.Status.Carry);
+    }
+
+    [Theory]
+    [InlineData(0x50, 0x50, true, false, true)] // Equal values, Zero flag set
+    [InlineData(0x60, 0x50, false, false, true)] // Y is greater
+    [InlineData(0x40, 0x50, false, true, false)] // Y is smaller
+    public void CPY(uint8_t initialY, uint8_t valueToLoad, bool expectZ, bool expectN, bool expectC) {
+        m_CPU.PC = 0x0200;
+        m_CPU.Y = initialY;
+        m_CPU.Write(0x0200, valueToLoad);
+        ExecuteInstruction(0xC0, m_CPU);
+
+        Assert.Equal(expectZ, m_CPU.Status.Zero);
+        Assert.Equal(expectN, m_CPU.Status.Negative);
+        Assert.Equal(expectC, m_CPU.Status.Carry);
+    }
 }

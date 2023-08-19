@@ -91,7 +91,27 @@ public partial class CPU {
     internal static bool ROR(CPU cpu) => NotImplemented<bool>("ROR");
     internal static bool RTI(CPU cpu) => NotImplemented<bool>("RTI");
     internal static bool RTS(CPU cpu) => NotImplemented<bool>("RTS");
-    internal static bool SBC(CPU cpu) => NotImplemented<bool>("SBC");
+
+    internal static bool SBC(CPU cpu) {
+        cpu.Fetch();
+
+        // Using 2's complement arithmetic, subtraction is equivalent to adding the inverse.
+        // Subtracting a byte B from A is same as A + ~B + 1
+        // So we invert the fetched byte and treat the carry flag as the +1.
+        uint16_t value = (uint16_t)(cpu.m_Fetched ^ 0x00FF);
+
+        // Then we can use similar logic to ADC for the rest of the operation.
+        cpu.m_Temp = (uint16_t)(cpu.A + value + (uint16_t)(cpu.Status.Carry ? 1 : 0));
+        cpu.Status.Carry = (cpu.m_Temp & 0xFF00) != 0;
+        cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
+        cpu.Status.Overflow = (~(cpu.A ^ value) & (cpu.A ^ cpu.m_Temp) & 0x0080) != 0;
+        cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
+
+        cpu.A = (uint8_t)(cpu.m_Temp & 0x00FF);
+
+        return true;
+    }
+
     internal static bool SEC(CPU cpu) => NotImplemented<bool>("SEC");
     internal static bool SED(CPU cpu) => NotImplemented<bool>("SED");
     internal static bool SEI(CPU cpu) => NotImplemented<bool>("SEI");

@@ -1,11 +1,10 @@
-﻿#nullable enable
-
-namespace Emulator.Tests;
+﻿namespace Emulator.Tests;
 
 public abstract unsafe class CPUTest {
     // Helper method to execute an instruction
     protected static void ExecuteInstruction(uint8_t opcode, CPU cpu) {
-        Instruction instruction = InstructionLookupTable[opcode];
+        cpu.Opcode = opcode;
+        Instruction instruction = InstructionLookupTable[cpu.Opcode];
         instruction.Address(cpu);
         instruction.Execute(cpu);
     }

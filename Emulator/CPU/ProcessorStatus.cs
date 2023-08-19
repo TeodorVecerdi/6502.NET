@@ -5,7 +5,9 @@ namespace Emulator;
 
 [StructLayout(LayoutKind.Sequential, Size = 1)]
 public struct ProcessorStatus : IFormattable {
-    private uint8_t m_Flags;
+    public ProcessorStatus() => this.m_Flags = ProcessorStatusFlags.Unused;
+
+    private uint8_t m_Flags = ProcessorStatusFlags.Unused;
 
     public bool Carry {
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
@@ -42,8 +44,12 @@ public struct ProcessorStatus : IFormattable {
         set => m_Flags = (byte)(value ? m_Flags | 0x10 : m_Flags & ~0x10);
     }
 
-    // There's an unused bit here, represented in some documentation as `U` for "Unused".
-    // It's always set and we won't represent it in this struct.
+    public bool Unused {
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        get => (m_Flags & 0x20) != 0;
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        set => m_Flags = (byte)(value ? m_Flags | 0x20 : m_Flags & ~0x20);
+    }
 
     public bool Overflow {
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]

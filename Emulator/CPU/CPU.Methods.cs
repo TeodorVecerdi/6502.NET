@@ -1,4 +1,3 @@
-﻿using System.Text;
 using Utilities;
 
 namespace Emulator;
@@ -25,13 +24,12 @@ public partial class CPU {
         this.X = 0x00;
         this.Y = 0x00;
         this.SP = 0xFD;
-        this.Status.Data = 0x00;
+        this.Status.Data = ProcessorStatusFlags.Unused;
 
         // Reset internal variables
         this.m_Fetched = 0x00;
         this.m_AbsoluteAddress = 0x0000;
         this.m_RelativeAddress = 0x0000;
-        var s = this.m_RelativeAddress;
         this.m_ClockCount = 0;
 
         // Resetting takes 7 cycles
@@ -57,6 +55,8 @@ public partial class CPU {
             if (requiresAdditionalCycle1 && requiresAdditionalCycle2) {
                 this.m_Cycles++;
             }
+
+            this.Status.Unused = true;
         }
 
         this.m_ClockCount++;

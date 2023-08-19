@@ -3,7 +3,7 @@ using B = Utilities.BoxArt;
 
 namespace Emulator;
 
-public readonly partial struct Memory64K {
+public readonly partial struct Memory {
     public void DumpPage(int pageNumber, StringBuilder stringBuilder, int width = 1, bool writeHeader = true, bool writeFooter = true) {
         const int bytesPerLine = 16;
         int startingAddress = pageNumber * 0x100;
@@ -35,7 +35,7 @@ public readonly partial struct Memory64K {
     }
 
     public void DumpPages(Range range, StringBuilder stringBuilder, int width = 1) {
-        const int pageCount = SIZE / 0xFF;
+        int pageCount = this.Size / 0xFF;
         (int offset, int length) = range.GetOffsetAndLength(pageCount);
         for (int pageNumber = offset; pageNumber < offset + length; pageNumber++) {
             this.DumpPage(pageNumber, stringBuilder, width, pageNumber == offset, pageNumber == offset + length - 1);

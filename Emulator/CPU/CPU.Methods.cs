@@ -9,11 +9,11 @@ public partial class CPU {
     }
 
     public uint8_t Read(uint16_t address) {
-        return this.m_Bus!.Read(address, false);
+        return this.m_Bus!.CpuRead(address, false);
     }
 
     public void Write(uint16_t address, uint8_t data) {
-        this.m_Bus!.Write(address, data);
+        this.m_Bus!.CpuWrite(address, data);
     }
 
     public void Reset() {

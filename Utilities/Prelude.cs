@@ -9,4 +9,6 @@ public static class Prelude {
 
     [DoesNotReturn, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void NotImplemented(string method) => throw new NotImplementedException($"Method [{method}] is not implemented yet.");
+
+    public const int KB = 1024;
 }

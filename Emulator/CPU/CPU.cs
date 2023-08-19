@@ -19,5 +19,13 @@ public partial class CPU {
     private uint8_t m_Cycles;
     private uint64_t m_ClockCount;
 
-    public ushort OpcodeAddress => this.m_OpcodeAddress;
+    public uint16_t OpcodeAddress => this.m_OpcodeAddress;
+
+    internal uint8_t Fetched => this.m_Fetched;
+    internal uint16_t Temp => this.m_Temp;
+    internal uint16_t AbsoluteAddress => this.m_AbsoluteAddress;
+    internal uint16_t RelativeAddress => this.m_RelativeAddress;
+    internal uint8_t Opcode => this.m_Opcode;
+    internal uint8_t Cycles => this.m_Cycles;
+    internal uint64_t ClockCount => this.m_ClockCount;
 }

@@ -17,7 +17,6 @@ public class Bus {
         this.m_CPU.Connect(this);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public uint8_t CpuRead(uint16_t address, bool readOnly = false) {
         if (address >= 0x0000 && address <= 0xFFFF) {
             return this.RAM[address];
@@ -26,7 +25,6 @@ public class Bus {
         return 0x00;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void CpuWrite(uint16_t address, uint8_t data) {
         if (address >= 0x0000 && address <= 0xFFFF) {
             this.RAM[address] = data;

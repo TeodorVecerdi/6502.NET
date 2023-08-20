@@ -8,12 +8,12 @@ public partial class CPU {
         this.m_Bus = bus;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public uint8_t Read(uint16_t address) {
         return this.m_Bus!.CpuRead(address, false);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Write(uint16_t address, uint8_t data) {
         this.m_Bus!.CpuWrite(address, data);
     }

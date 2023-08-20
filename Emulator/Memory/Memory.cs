@@ -13,12 +13,12 @@ public readonly partial struct Memory {
     public int32_t Size => this.m_Data.Length;
 
     public uint8_t this[uint16_t address] {
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         get => this.m_Data[address];
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         set => this.m_Data[address] = value;
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteBlock(uint16_t offset, params uint8_t[] data) => data.CopyTo(this.m_Data, offset);
 }

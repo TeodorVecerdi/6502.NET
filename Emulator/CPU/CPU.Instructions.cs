@@ -1,4 +1,4 @@
-namespace Emulator;
+﻿namespace Emulator;
 
 public partial class CPU {
     private static bool ADC(CPU cpu) {
@@ -41,9 +41,48 @@ public partial class CPU {
         return false;
     }
 
-    private static bool BCC(CPU cpu) => NotImplemented<bool>("BCC");
-    private static bool BCS(CPU cpu) => NotImplemented<bool>("BCS");
-    private static bool BEQ(CPU cpu) => NotImplemented<bool>("BEQ");
+    private static bool BCC(CPU cpu) {
+        if (cpu.Status.Carry) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BCS(CPU cpu) {
+        if (!cpu.Status.Carry) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BEQ(CPU cpu) {
+        if (!cpu.Status.Zero) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
     private static bool BIT(CPU cpu) {
         cpu.Fetch();
         cpu.m_Temp = (uint16_t)(cpu.A & cpu.m_Fetched);
@@ -53,12 +92,97 @@ public partial class CPU {
         return false;
     }
 
-    private static bool BMI(CPU cpu) => NotImplemented<bool>("BMI");
-    private static bool BNE(CPU cpu) => NotImplemented<bool>("BNE");
-    private static bool BPL(CPU cpu) => NotImplemented<bool>("BPL");
-    private static bool BRK(CPU cpu) => NotImplemented<bool>("BRK");
-    private static bool BVC(CPU cpu) => NotImplemented<bool>("BVC");
-    private static bool BVS(CPU cpu) => NotImplemented<bool>("BVS");
+    private static bool BMI(CPU cpu) {
+        if (!cpu.Status.Negative) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BNE(CPU cpu) {
+        if (cpu.Status.Zero) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BPL(CPU cpu) {
+        if (cpu.Status.Negative) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BRK(CPU cpu) {
+        cpu.PC++;
+
+
+        // Push PC to the stack
+        cpu.Write((uint16_t)(0x0100 + cpu.SP), (uint8_t)((cpu.PC >> 8) & 0x00FF));
+        cpu.SP--;
+        cpu.Write((uint16_t)(0x0100 + cpu.SP), (uint8_t)(cpu.PC & 0x00FF));
+        cpu.SP--;
+
+        // Push status to the stack
+        cpu.Status.BreakCommand = true;
+        cpu.Write((uint16_t)(0x0100 + cpu.SP), cpu.Status.Data);
+        cpu.SP--;
+        cpu.Status.BreakCommand = false;
+
+        cpu.Status.InterruptDisable = true;
+
+        cpu.PC = (uint16_t)(cpu.Read(0xFFFE) | (cpu.Read(0xFFFF) << 8));
+        return false;
+    }
+
+    private static bool BVC(CPU cpu) {
+        if (cpu.Status.Overflow) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool BVS(CPU cpu) {
+        if (!cpu.Status.Overflow) return false;
+
+        cpu.m_Cycles++;
+        cpu.m_AbsoluteAddress = (uint16_t)(cpu.PC + cpu.m_RelativeAddress);
+
+        if ((cpu.m_AbsoluteAddress & 0xFF00) != (cpu.PC & 0xFF00)) {
+            cpu.m_Cycles++;
+        }
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
 
     private static bool CLC(CPU cpu) {
         cpu.Status.Carry = false;
@@ -171,8 +295,22 @@ public partial class CPU {
         return false;
     }
 
-    private static bool JMP(CPU cpu) => NotImplemented<bool>("JMP");
-    private static bool JSR(CPU cpu) => NotImplemented<bool>("JSR");
+    private static bool JMP(CPU cpu) {
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
+
+    private static bool JSR(CPU cpu) {
+        cpu.PC--;
+
+        cpu.Write((uint16_t)(0x0100 + cpu.SP), (uint8_t)((cpu.PC >> 8) & 0x00FF));
+        cpu.SP--;
+        cpu.Write((uint16_t)(0x0100 + cpu.SP), (uint8_t)(cpu.PC & 0x00FF));
+        cpu.SP--;
+
+        cpu.PC = cpu.m_AbsoluteAddress;
+        return false;
+    }
 
     private static bool LDA(CPU cpu) {
         cpu.A = cpu.Fetch();
@@ -299,8 +437,30 @@ public partial class CPU {
         return false;
     }
 
-    private static bool RTI(CPU cpu) => NotImplemented<bool>("RTI");
-    private static bool RTS(CPU cpu) => NotImplemented<bool>("RTS");
+    private static bool RTI(CPU cpu) {
+        // Read status from stack
+        cpu.SP++;
+        cpu.Status.Data = cpu.Read((uint16_t)(0x0100 + cpu.SP));
+        cpu.Status.BreakCommand = false;
+        cpu.Status.Unused = true;
+
+        // Read PC from stack
+        cpu.SP++;
+        cpu.PC = cpu.Read((uint16_t)(0x0100 + cpu.SP));
+        cpu.SP++;
+        cpu.PC |= (uint16_t)(cpu.Read((uint16_t)(0x0100 + cpu.SP)) << 8);
+
+        return false;
+    }
+
+    private static bool RTS(CPU cpu) {
+        cpu.SP++;
+        cpu.PC = cpu.Read((uint16_t)(0x0100 + cpu.SP));
+        cpu.SP++;
+        cpu.PC |= (uint16_t)(cpu.Read((uint16_t)(0x0100 + cpu.SP)) << 8);
+        cpu.PC++;
+        return false;
+    }
 
     private static bool SBC(CPU cpu) {
         cpu.Fetch();

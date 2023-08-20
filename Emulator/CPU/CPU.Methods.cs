@@ -1,3 +1,4 @@
+﻿using System.Runtime.CompilerServices;
 using Utilities;
 
 namespace Emulator;
@@ -7,10 +8,12 @@ public partial class CPU {
         this.m_Bus = bus;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public uint8_t Read(uint16_t address) {
         return this.m_Bus!.CpuRead(address, false);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     public void Write(uint16_t address, uint8_t data) {
         this.m_Bus!.CpuWrite(address, data);
     }
@@ -32,8 +35,8 @@ public partial class CPU {
         this.m_RelativeAddress = 0x0000;
         this.m_ClockCount = 0;
 
-        // Resetting takes 7 cycles
-        this.m_Cycles = 7;
+        // Resetting takes 8 cycles
+        this.m_Cycles = 8;
     }
 
     public bool IsInstructionComplete() => this.m_Cycles == 0;

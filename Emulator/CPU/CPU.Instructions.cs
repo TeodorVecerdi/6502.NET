@@ -1,4 +1,4 @@
-﻿namespace Emulator;
+namespace Emulator;
 
 public partial class CPU {
     private static bool ADC(CPU cpu) {
@@ -32,7 +32,7 @@ public partial class CPU {
         cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
         cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
 
-        if (InstructionLookupTable[cpu.m_Opcode].AddressingMode == AddressingMode.IMP) {
+        if (cpu.m_CurrentAddressingMode == AddressingMode.IMP) {
             cpu.A = (uint8_t)(cpu.m_Temp & 0x00FF);
         } else {
             cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));
@@ -203,7 +203,7 @@ public partial class CPU {
         cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
         cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
 
-        if (InstructionLookupTable[cpu.m_Opcode].AddressingMode == AddressingMode.IMP) {
+        if (cpu.m_CurrentAddressingMode == AddressingMode.IMP) {
             cpu.A = (uint8_t)(cpu.m_Temp & 0x00FF);
         } else {
             cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));
@@ -273,7 +273,7 @@ public partial class CPU {
         cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
         cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
 
-        if (InstructionLookupTable[cpu.m_Opcode].AddressingMode == AddressingMode.IMP) {
+        if (cpu.m_CurrentAddressingMode == AddressingMode.IMP) {
             cpu.A = (uint8_t)(cpu.m_Temp & 0x00FF);
         } else {
             cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));
@@ -290,7 +290,7 @@ public partial class CPU {
         cpu.Status.Zero = (cpu.m_Temp & 0x00FF) == 0;
         cpu.Status.Negative = (cpu.m_Temp & 0x80) != 0;
 
-        if (InstructionLookupTable[cpu.m_Opcode].AddressingMode == AddressingMode.IMP) {
+        if (cpu.m_CurrentAddressingMode == AddressingMode.IMP) {
             cpu.A = (uint8_t)(cpu.m_Temp & 0x00FF);
         } else {
             cpu.Write(cpu.m_AbsoluteAddress, (uint8_t)(cpu.m_Temp & 0x00FF));

@@ -1,4 +1,4 @@
-﻿namespace Emulator;
+namespace Emulator;
 
 public partial class CPU {
     public uint16_t PC;
@@ -18,6 +18,8 @@ public partial class CPU {
     private uint16_t m_OpcodeAddress;
     private uint8_t m_Cycles;
     private uint64_t m_ClockCount;
+
+    private AddressingMode m_CurrentAddressingMode;
 
     public uint16_t OpcodeAddress => this.m_OpcodeAddress;
 

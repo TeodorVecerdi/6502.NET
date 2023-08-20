@@ -4,7 +4,7 @@ public abstract unsafe class CPUTest {
     // Helper method to execute an instruction
     protected static void ExecuteInstruction(uint8_t opcode, CPU cpu) {
         cpu.Opcode = opcode;
-        Instruction instruction = InstructionLookupTable[cpu.Opcode];
+        Instruction instruction = cpu.LoadInstruction();
         instruction.Address(cpu);
         instruction.Execute(cpu);
     }

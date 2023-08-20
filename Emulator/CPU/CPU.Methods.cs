@@ -1,4 +1,4 @@
-﻿using Utilities;
+using Utilities;
 
 namespace Emulator;
 
@@ -98,7 +98,7 @@ public partial class CPU {
             this.m_OpcodeAddress = this.PC;
             this.PC++;
 
-            Instruction instruction = InstructionLookupTable[this.m_Opcode];
+            Instruction instruction = this.LoadInstruction();
             this.m_Cycles = instruction.Cycles;
 
             bool requiresAdditionalCycle1 = instruction.Address(this);
@@ -114,12 +114,20 @@ public partial class CPU {
         this.m_Cycles--;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     private uint8_t Fetch() {
-        if (InstructionLookupTable[this.m_Opcode].AddressingMode != AddressingMode.IMP) {
+        if (this.m_CurrentAddressingMode != AddressingMode.IMP) {
             this.m_Fetched = this.Read(this.m_AbsoluteAddress);
         }
 
         return this.m_Fetched;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    internal Instruction LoadInstruction() {
+        Instruction instruction = InstructionLookupTable[this.m_Opcode];
+        this.m_CurrentAddressingMode = instruction.AddressingMode;
+        return instruction;
     }
 
     public Dictionary<uint16_t, string> Disassemble(uint16_t startAddress, uint16_t endAddress) {

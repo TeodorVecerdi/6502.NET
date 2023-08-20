@@ -59,10 +59,26 @@ public partial class CPU {
     private static bool BRK(CPU cpu) => NotImplemented<bool>("BRK");
     private static bool BVC(CPU cpu) => NotImplemented<bool>("BVC");
     private static bool BVS(CPU cpu) => NotImplemented<bool>("BVS");
-    private static bool CLC(CPU cpu) => NotImplemented<bool>("CLC");
-    private static bool CLD(CPU cpu) => NotImplemented<bool>("CLD");
-    private static bool CLI(CPU cpu) => NotImplemented<bool>("CLI");
-    private static bool CLV(CPU cpu) => NotImplemented<bool>("CLV");
+
+    private static bool CLC(CPU cpu) {
+        cpu.Status.Carry = false;
+        return false;
+    }
+
+    private static bool CLD(CPU cpu) {
+        cpu.Status.DecimalMode = false;
+        return false;
+    }
+
+    private static bool CLI(CPU cpu) {
+        cpu.Status.InterruptDisable = false;
+        return false;
+    }
+
+    private static bool CLV(CPU cpu) {
+        cpu.Status.Overflow = false;
+        return false;
+    }
 
     private static bool CMP(CPU cpu) {
         cpu.Fetch();
@@ -306,9 +322,20 @@ public partial class CPU {
         return true;
     }
 
-    private static bool SEC(CPU cpu) => NotImplemented<bool>("SEC");
-    private static bool SED(CPU cpu) => NotImplemented<bool>("SED");
-    private static bool SEI(CPU cpu) => NotImplemented<bool>("SEI");
+    private static bool SEC(CPU cpu) {
+        cpu.Status.Carry = true;
+        return false;
+    }
+
+    private static bool SED(CPU cpu) {
+        cpu.Status.DecimalMode = true;
+        return false;
+    }
+
+    private static bool SEI(CPU cpu) {
+        cpu.Status.InterruptDisable = true;
+        return false;
+    }
 
     private static bool STA(CPU cpu) {
         cpu.Write(cpu.m_AbsoluteAddress, cpu.A);

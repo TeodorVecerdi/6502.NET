@@ -22,7 +22,7 @@ public readonly partial struct Memory {
             int address = startingAddress + row * columns;
             stringBuilder.Append($" {address.ToString("X4").Cyan()} {B.Vertical()}");
             for (int col = 0; col < columns; col++) {
-                stringBuilder.Append($" {this[address + col].ToString("X2").DarkBlue()}");
+                stringBuilder.Append($" {this[(uint16_t)(address + col)].ToString("X2").DarkBlue()}");
             }
 
             stringBuilder.Append($" {B.Vertical()}");

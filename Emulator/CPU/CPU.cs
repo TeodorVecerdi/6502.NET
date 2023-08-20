@@ -1,4 +1,4 @@
-namespace Emulator;
+﻿namespace Emulator;
 
 public partial class CPU {
     public uint16_t PC;
@@ -31,6 +31,9 @@ public partial class CPU {
         get => this.m_Opcode;
         set => this.m_Opcode = value;
     }
-    internal uint8_t Cycles => this.m_Cycles;
+    internal uint8_t Cycles {
+        get => this.m_Cycles;
+        set => this.m_Cycles = value;
+    }
     internal uint64_t ClockCount => this.m_ClockCount;
 }

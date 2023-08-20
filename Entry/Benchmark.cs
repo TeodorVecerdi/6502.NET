@@ -1,10 +1,5 @@
-﻿#nullable enable
-
-using System.Diagnostics;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using Emulator;
-
-namespace Entry;
 
 [MemoryDiagnoser(false)]
 public class Benchmark {
